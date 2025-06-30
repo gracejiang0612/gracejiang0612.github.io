@@ -341,22 +341,123 @@
 
         /* 摄影作品网格特定样式 */
         #photography-section .portfolio-grid {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Slightly smaller images for denser grid */
-            gap: 15px; /* Smaller gap between images */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        /* Orientation-specific styling - maintaining aspect ratios */
+        #photography-section .photo-vertical {
+            grid-row: span 2; /* Vertical photos take more vertical space */
+            height: 400px;
+        }
+
+        #photography-section .photo-horizontal {
+            height: 200px; /* Smaller height for horizontal photos */
+            width: 100%;
         }
 
         #photography-section .portfolio-grid img {
             width: 100%;
-            height: 180px; /* Fixed height for consistent grid rows */
-            object-fit: cover; /* Cover the area, cropping if necessary */
-            border-radius: 8px; /* Rounded corners for images */
+            object-fit: contain; /* Maintain aspect ratio instead of cropping */
+            object-position: center;
+            border-radius: 12px;
+            cursor: pointer; /* Show it's clickable */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            background-color: #1a1a1a; /* Background for letterboxing if needed */
         }
 
         #photography-section .portfolio-grid img:hover {
-            transform: scale(1.03); /* Slight zoom on hover */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(6, 214, 160, 0.3);
+        }
+
+        /* Lightbox Modal Styling */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .lightbox-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(6, 214, 160, 0.8);
+        }
+
+        /* Responsive Photography Grid */
+        @media (max-width: 768px) {
+            #photography-section .portfolio-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+            }
+
+            #photography-section .photo-vertical {
+                height: 300px;
+                grid-row: span 1; /* Less dramatic difference on mobile */
+            }
+
+            #photography-section .photo-horizontal {
+                height: 200px;
+            }
+
+            .lightbox-close {
+                top: 15px;
+                right: 15px;
+                font-size: 30px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #photography-section .portfolio-grid {
+                grid-template-columns: 1fr 1fr; /* Two columns on very small screens */
+                gap: 10px;
+            }
+
+            #photography-section .photo-vertical,
+            #photography-section .photo-horizontal {
+                height: 180px; /* Uniform height on very small screens */
+                grid-row: span 1;
+            }
         }
 
         .portfolio-item {
@@ -834,19 +935,105 @@
     <section id="photography-section" class="bg-black text-white fade-in-section">
         <h2 class="section-heading">Photography</h2>
         <div class="portfolio-grid">
-            <!-- Example Photography Work - Direct Image Grid -->
-            <img src="https://placehold.co/400x200/FF6B6B/000000?text=Photo+1" alt="Photography Work 1">
-            <img src="https://placehold.co/400x200/FFD166/000000?text=Photo+2" alt="Photography Work 2">
-            <img src="https://placehold.co/400x200/06D6A0/000000?text=Photo+3" alt="Photography Work 3">
-            <img src="https://placehold.co/400x200/118AB2/000000?text=Photo+4">
-            <img src="https://placehold.co/400x200/073B4C/FFFFFF?text=Photo+5">
-            <img src="https://placehold.co/400x200/A23B72/FFFFFF?text=Photo+6">
-            <img src="https://placehold.co/400x200/FF6B6B/000000?text=Photo+7">
-            <img src="https://placehold.co/400x200/FFD166/000000?text=Photo+8">
-            <img src="https://placehold.co/400x200/06D6A0/000000?text=Photo+9">
-            <img src="https://placehold.co/400x200/118AB2/000000?text=Photo+10">
-            <img src="https://placehold.co/400x200/073B4C/FFFFFF?text=Photo+11">
-            <img src="https://placehold.co/400x200/A23B72/FFFFFF?text=Photo+12">
+            <!-- Grace's Updated Photography Portfolio - Current Collection -->
+            
+            <!-- Opening Statement - Professional High-Quality Shots -->
+            <img src="photography/DSC09291.JPG" alt="Professional Camera Work" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/DSCF6229-2.JPG" alt="Artistic Composition" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_8509.JPG" alt="Portrait Mastery" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Nature & Outdoor Collection -->
+            <img src="photography/IMG_0979.JPG" alt="Natural Light Study" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/50ba0424c4409ae34ecdd37bd44c4bad.JPG" alt="Outdoor Adventure" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/72cad9b4d9a2990cbc2553cac6e5999b.JPG" alt="Nature's Beauty" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_5229.jpg" alt="Environmental Portrait" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Urban & Architectural -->
+            <img src="photography/IMG_1838.JPG" alt="Urban Scene" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/pic23.JPG" alt="Architectural Detail" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_8776.JPG" alt="City Life" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/750d7d0f71d46030b79b17da33d5ba51.jpg" alt="Street Photography" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Portrait Collection -->
+            <img src="photography/IMG_2191.JPG" alt="Character Study" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/IMG_1086.JPG" alt="Candid Moment" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_2202.JPG" alt="Expression Capture" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/pic25.JPG" alt="Natural Portrait" class="photo-horizontal" onclick="openLightbox(this)">
+            
+            <!-- Creative & Artistic -->
+            <img src="photography/pic20.JPG" alt="Creative Composition" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/pic21.JPG" alt="Artistic Vision" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/pic10.jpeg" alt="Visual Poetry" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_6339.JPG" alt="Light and Shadow" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Documentary Style -->
+            <img src="photography/IMG_9051.JPG" alt="Documentary Moment" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_9147.JPG" alt="Real Life Story" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/IMG_2089.JPG" alt="Social Documentation" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/pic11.JPG" alt="Cultural Capture" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Lifestyle & Travel -->
+            <img src="photography/IMG_2150.JPG" alt="Travel Memory" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_2932.JPG" alt="Adventure Moment" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/IMG_5193.jpg" alt="Journey Capture" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_5194.jpg" alt="Wanderlust" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Technical Excellence -->
+            <img src="photography/e708c17b5ce475e55822b9bacc67d4e8.JPG" alt="Technical Mastery" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/AD8E752C-6190-42EB-9848-10D95FEDB4F2.JPG" alt="Professional Quality" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/82b0b59aa2f64719207da913683118a2.JPG" alt="Studio Work" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/pic12.JPG" alt="Precision Capture" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Emotional & Intimate -->
+            <img src="photography/IMG_2343.jpg" alt="Intimate Moment" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_2370.jpg" alt="Emotional Depth" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/IMG_2463.JPG" alt="Human Connection" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_2315.JPG" alt="Tender Moment" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Dynamic & Action -->
+            <img src="photography/IMG_8777.jpg" alt="Motion Capture" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_8790.JPG" alt="Dynamic Scene" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/pic22.JPG" alt="Energy & Movement" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/pic24.JPG" alt="Action Shot" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Abstract & Artistic Details -->
+            <img src="photography/3C294651-348A-48B2-BB7A-13E376B7DD0E.JPG" alt="Abstract Beauty" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/4DB1D7C6-3FC2-49A0-BB7E-561F3212A744.JPG" alt="Artistic Detail" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/55CB5B5E-F533-468F-B484-71238EDDBDBA.JPG" alt="Creative Focus" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/8CFBA1CC-DB73-4490-AAFF-A948D2837949.JPG" alt="Visual Texture" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Seasonal & Atmospheric -->
+            <img src="photography/IMG_2672.JPG" alt="Atmospheric Shot" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_2708.jpg" alt="Seasonal Beauty" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/IMG_2719.jpg" alt="Weather Moment" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_2723.jpg" alt="Climate Capture" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Special Moments Collection -->
+            <img src="photography/IMG_5195.jpg" alt="Special Occasion" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_5198.jpg" alt="Celebration" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/IMG_5209.jpg" alt="Joy Capture" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_5813.JPG" alt="Memory Making" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Additional Recent Work -->
+            <img src="photography/IMG_2248.JPG" alt="Recent Excellence" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/e5db693c152d28e1363f7383594409d3.jpg" alt="Artistic Masterpiece" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Closing Showcase -->
+            <img src="photography/pic26.JPG" alt="Artistic Vision" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/pic28.JPG" alt="Creative Excellence" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/F08E709A-B59E-41F7-8C31-82D8A7821FE0.JPG" alt="Professional Finish" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_3449.jpg" alt="Masterpiece" class="photo-vertical" onclick="openLightbox(this)">
+            
+            <!-- Final Collection -->
+            <img src="photography/IMG_2193.jpg" alt="Signature Style" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_2199.JPG" alt="Photographic Excellence" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/IMG_2564.jpg" alt="Visual Storytelling" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/IMG_3260.jpg" alt="Artistic Legacy" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/1666043b16e90c250086e76a62f7a1c6.JPG" alt="Portfolio Highlight" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/3b1c815833d51338cf97589155b121d3 2.JPG" alt="Creative Vision" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/509d7e3af6f095abd7ec5660f814e7a2 2.JPG" alt="Technical Artistry" class="photo-horizontal" onclick="openLightbox(this)">
+            <img src="photography/42219bcc27af0ea3d27f006f82c832f5.jpg" alt="Professional Portfolio" class="photo-vertical" onclick="openLightbox(this)">
+            <img src="photography/8addc0d92cccdc0c8dc01cbec00ac306.jpg" alt="Grace's Vision" class="photo-horizontal" onclick="openLightbox(this)">
         </div>
     </section>
 
@@ -930,6 +1117,12 @@
     <div id="messageBox" class="message-box">
         <p id="messageText"></p>
         <button onclick="document.getElementById('messageBox').style.display='none'">OK</button>
+    </div>
+
+    <!-- Lightbox Modal for Full-Size Photos -->
+    <div id="photoLightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightboxImage" class="lightbox-content" onclick="event.stopPropagation()">
     </div>
 
     <script>
@@ -1055,7 +1248,7 @@
             }
         });
 
-        // --- Contact Form Submission (Frontend Example) ---
+        // --- Contact Form Submission via Email Client ---
         const contactForm = document.getElementById('contactForm');
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault(); // Prevent default form submission
@@ -1064,30 +1257,25 @@
             const email = document.getElementById('email').value;
             const message = document.getElementById('message').value;
 
-            // In a real application, you would send this data to a backend server
-            // For example, using the fetch API:
-            /*
-            fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name, email, message }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                showMessageBox('Message sent! Thanks for reaching out. I\'ll get back to you quicker than a breaking news alert!');
-                contactForm.reset(); // Clear the form
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                showMessageBox('Failed to send message. Please try again later, or just send an email!');
-            });
-            */
+            // Create the email content
+            const subject = encodeURIComponent('Message from Portfolio Website');
+            const body = encodeURIComponent(
+                `Hi Grace,\n\n` +
+                `Someone sent you a message from your portfolio website:\n\n` +
+                `Name: ${name}\n` +
+                `Email: ${email}\n\n` +
+                `Message:\n${message}\n\n` +
+                `Best regards,\n${name}`
+            );
 
-            // For now, this just logs to console and shows a frontend message
-            console.log('Form Data:', { name, email, message });
-            showMessageBox('Message sent! Thanks for reaching out. I\'ll get back to you quicker than a breaking news alert!');
+            // Create mailto link
+            const mailtoLink = `mailto:grace.jiang0612@gmail.com?subject=${subject}&body=${body}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message and clear form
+            showMessageBox('Your email client should now open with the message pre-filled. Just click send! If it doesn\'t work, you can email me directly at grace.jiang0612@gmail.com');
             contactForm.reset(); // Clear the form
         });
 
@@ -1158,6 +1346,34 @@
                     section.classList.add('is-visible');
                 }
             });
+        });
+
+        // --- Photography Lightbox Functionality ---
+        function openLightbox(imageElement) {
+            const lightbox = document.getElementById('photoLightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            
+            lightboxImage.src = imageElement.src;
+            lightboxImage.alt = imageElement.alt;
+            lightbox.style.display = 'block';
+            
+            // Prevent body scroll when lightbox is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('photoLightbox');
+            lightbox.style.display = 'none';
+            
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close lightbox when pressing Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
         });
 
     </script>
