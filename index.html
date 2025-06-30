@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grace Jiang's Incredible Website</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Inter (general fallback), Caveat (handwritten), and Alfa Slab One (bold display) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Caveat:wght@400;700&family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom styles to ensure full-screen video and black background */
+        body {
+            font-family: 'Inter', sans-serif; /* Default fallback font */
+            background-color: #000; /* Black background */
+            color: #fff; /* Default text color is white */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            scroll-behavior: smooth; /* Enable smooth scrolling for anchor links */
+        }
+
+        /* 全屏视频容器 */
+        .video-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000; /* Background before video loads */
+        }
+
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover; /* Ensure video covers the entire container */
+            z-index: 0;
+        }
+
+        /* 视频上方的叠加内容 - 调整为更小尺寸和顶部位置 */
+        .video-overlay {
+            position: absolute;
+            top: 20px; /* Moved from bottom to top */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            text-align: center;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.6); /* Slightly less opaque */
+            padding: 8px 15px; /* Smaller padding */
+            border-radius: 8px;
+            font-size: 0.9rem; /* Smaller font size */
+            max-width: 80%; /* Limit width */
+        }
+
+        .video-overlay p {
+            font-size: 1rem; /* Ensure the text itself is not too large */
+            margin: 0; /* Remove default paragraph margin */
+        }
+
+
+        /* 自定义视频控制器样式 */
+        .custom-video-controls {
+            position: absolute;
+            bottom: 80px; /* Adjust position */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px;
+            border-radius: 12px;
+        }
+
+        .custom-video-controls button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .custom-video-controls button:hover {
+            color: #a0aec0; /* Light gray on hover */
+        }
+
+        .progress-bar-container {
+            width: 200px;
+            height: 8px;
+            background-color: #555;
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #4CAF50; /* Green progress */
+            border-radius: 4px;
+        }
+
+        /* Scroll notification styling */
+        .scroll-notification {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            z-index: 15;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 2px solid #06D6A0; /* Emerald Green border */
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(6, 214, 160, 0.3);
+        }
+
+        .scroll-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-notification:hover {
+            background-color: rgba(6, 214, 160, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(6, 214, 160, 0.4);
+        }
+
+        .scroll-notification i {
+            margin-top: 8px;
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
+        /* 内容板块的通用样式 */
+        section {
+            padding: 60px 20px; /* Reduced from 80px for more compact layout */
+            min-height: 100vh; /* Ensure each section takes at least one viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        /* Special compact styling for intro section */
+        #self-intro-section {
+            padding: 40px 20px; /* Even more compact for intro */
+            min-height: 90vh; /* Slightly reduced to fit on screen */
+        }
+
+        section:nth-of-type(odd) {
+             background-color: #1a1a1a; /* Slightly lighter black to differentiate sections */
+        }
+
+        section:nth-of-type(even) {
+            background-color: #000;
+        }
+
+        /* 现代、多彩的标题 (油画色彩效果) */
+        .section-heading {
+            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One for headings */
+            font-size: 4.5rem; /* Larger for impact */
+            font-weight: normal; /* Alfa Slab One is already bold */
+            margin-bottom: 2rem;
+            text-align: center;
+            /* Using a rich, multi-stop gradient for "oil painting" effect */
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent; /* Make text transparent to show background gradient */
+            background-image: linear-gradient(to right,
+                #FF6B6B, /* Warm Red */
+                #FFD166, /* Sunny Yellow */
+                #06D6A0, /* Emerald Green */
+                #118AB2, /* Deep Blue */
+                #073B4C, /* Dark Teal */
+                #A23B72, /* Rich Plum */
+                #FF6B6B /* Repeat for seamless loop */
+            );
+            background-size: 200% auto; /* For animation */
+            animation: color-cycle 15s infinite linear; /* Slower animation for painterly feel */
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.5); /* Stronger shadow for depth */
+        }
+
+        @keyframes color-cycle {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* 自我介绍部分布局 */
+        .intro-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 1400px; /* Increased width to use more screen space */
+            width: 100%;
+            padding: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .intro-content {
+                flex-direction: row;
+                align-items: center; /* Center align for better visual balance */
+                gap: 25px; /* Reduced gap between photo and text */
+            }
+        }
+
+        .intro-photo-container {
+            flex: 0.6; /* Reduced from 1 to give less space to photo */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px; /* Reduced gap */
+        }
+
+        .intro-photo {
+            width: 320px; /* Reduced from 400px */
+            height: 320px; /* Reduced from 400px */
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #06D6A0; /* Slightly thicker emerald green border */
+            box-shadow: 0 0 25px rgba(6, 214, 160, 0.6); /* Enhanced glow */
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .intro-text-container {
+            flex: 2.4; /* Increased from 2 to give more space to text */
+            text-align: left;
+        }
+
+        .intro-text-container p {
+            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to intro text */
+            font-size: 1.6rem; /* Increased from 1.2rem for better readability */
+            line-height: 1.5; /* Reduced from 1.7 for more compact layout */
+            margin-bottom: 1.2rem; /* Reduced from 1.8rem for tighter spacing */
+            color: #f0f0f0; /* Ensure good contrast */
+        }
+
+        .intro-text-container .text-xl {
+            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to the "Welcome" line */
+            font-size: 2.4rem; /* Increased from 1.8rem for better emphasis */
+            color: #FFD166; /* Sunny Yellow for emphasis */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 0; /* Remove extra margin from the last element */
+        }
+
+        /* Responsive text sizing and photo sizing for mobile devices */
+        @media (max-width: 768px) {
+            .intro-content {
+                gap: 20px; /* Reduced gap on mobile */
+            }
+
+            .intro-text-container p {
+                font-size: 1.4rem; /* Slightly smaller on mobile for better fit */
+                line-height: 1.4; /* More compact on mobile */
+                margin-bottom: 1rem; /* Tighter spacing on mobile */
+            }
+
+            .intro-text-container .text-xl {
+                font-size: 2rem; /* Adjusted for mobile screens */
+            }
+
+            .intro-photo {
+                width: 250px; /* Smaller on mobile */
+                height: 250px; /* Smaller on mobile */
+                border: 4px solid #06D6A0;
+                box-shadow: 0 0 20px rgba(6, 214, 160, 0.5);
+            }
+
+            #self-intro-section {
+                padding: 30px 15px; /* Even more compact on mobile */
+                min-height: 85vh;
+            }
+        }
+
+        /* Additional responsive design for very small screens */
+        @media (max-width: 480px) {
+            .intro-photo {
+                width: 220px; /* Even smaller for very small screens */
+                height: 220px; /* Even smaller for very small screens */
+                border: 3px solid #06D6A0;
+                box-shadow: 0 0 15px rgba(6, 214, 160, 0.4);
+            }
+
+            .social-icons a {
+                font-size: 2rem; /* Smaller icons on very small screens */
+                margin: 0 10px;
+            }
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 2.2rem; /* Slightly smaller for more compact layout */
+            margin: 0 12px; /* Reduced margin */
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #118AB2; /* Deep Blue hover effect */
+            transform: translateY(-5px);
+        }
+
+        /* 作品集板块的通用样式 */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 40px;
+        }
+
+        /* 摄影作品网格特定样式 */
+        #photography-section .portfolio-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Slightly smaller images for denser grid */
+            gap: 15px; /* Smaller gap between images */
+        }
+
+        #photography-section .portfolio-grid img {
+            width: 100%;
+            height: 180px; /* Fixed height for consistent grid rows */
+            object-fit: cover; /* Cover the area, cropping if necessary */
+            border-radius: 8px; /* Rounded corners for images */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #photography-section .portfolio-grid img:hover {
+            transform: scale(1.03); /* Slight zoom on hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .portfolio-item {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #333;
+        }
+
+        .portfolio-item .content {
+            padding: 20px;
+            color: #f0f0f0;
+        }
+
+        .portfolio-item h3 {
+            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to portfolio item titles */
+            font-size: 1.8rem; /* Larger for impact */
+            font-weight: normal;
+            margin-bottom: 10px;
+            color: #FFD166; /* Sunny Yellow for portfolio item titles */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* 随机颜色用于作品集项目标题，更具动态感 */
+        .portfolio-item:nth-child(2n) h3 { color: #06D6A0; } /* Emerald Green */
+        .portfolio-item:nth-child(3n) h3 { color: #118AB2; } /* Deep Blue */
+        .portfolio-item:nth-child(4n) h3 { color: #A23B72; } /* Rich Plum */
+
+
+        .portfolio-item p {
+            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to portfolio item paragraphs */
+            font-size: 0.9rem; /* Smaller for readability */
+            line-height: 1.4;
+            color: #f0f0f0;
+        }
+
+        /* YouTube 视频嵌入样式 */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 宝丽来相机部分 */
+        .polaroid-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .polaroid-camera {
+            width: 350px;
+            height: 400px;
+            background-color: #333;
+            border-radius: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.7);
+            border: 5px solid #555;
+        }
+
+        .camera-lens {
+            width: 120px;
+            height: 120px;
+            background-color: #222;
+            border-radius: 50%;
+            border: 8px solid #444;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.8) inset;
+        }
+        .camera-lens-inner {
+            width: 80px;
+            height: 80px;
+            background-color: #000;
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .camera-shutter-button {
+            position: absolute;
+            bottom: 30px;
+            background-color: #FF6B6B; /* Warm Red button */
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to button text */
+            font-size: 1.5rem;
+        }
+
+        .camera-shutter-button:hover {
+            background-color: #E65C5C;
+            transform: translateY(-3px);
+        }
+
+        .camera-feed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            background-color: #222; /* Placeholder for video feed */
+            display: none; /* Hidden by default, shown when camera is active */
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .camera-canvas {
+            display: none; /* Hidden by default */
+        }
+
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            text-align: center;
+        }
+
+        .message-box button {
+            background-color: #06D6A0; /* Emerald Green button */
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to button text */
+        }
+
+        /* 便利贴墙 */
+        .sticky-wall-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            position: relative;
+        }
+
+        .sticky-note {
+            background-color: #FFD166; /* Sunny Yellow sticky note */
+            color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .sticky-note:nth-child(3n+1) { transform: rotate(3deg); background-color: #06D6A0; color: #fff;} /* Emerald Green */
+        .sticky-note:nth-child(3n+2) { transform: rotate(-2deg); background-color: #118AB2; color: #fff;} /* Deep Blue */
+        .sticky-note:nth-child(3n+3) { transform: rotate(1deg); background-color: #A23B72; color: #fff;} /* Rich Plum */
+
+        .sticky-note img {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .sticky-note p {
+            font-size: 0.95rem;
+            line-height: 1.4;
+            font-family: 'Caveat', cursive; /* Apply Caveat to sticky note text */
+            font-size: 1.2rem; /* Slightly larger for legibility */
+            color: inherit; /* Inherit color from sticky note background */
+        }
+
+        /* 联系表单 */
+        .contact-form-container {
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .contact-form-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form-container label {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #f0f0f0;
+            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to form labels */
+            font-size: 1.5rem;
+        }
+
+        .contact-form-container input,
+        .contact-form-container textarea {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #fff;
+            font-size: 1rem;
+            width: 100%;
+            box-sizing: border-box; /* Include padding in width */
+            font-family: 'Inter', sans-serif; /* Keep input text readable */
+        }
+
+        .contact-form-container input:focus,
+        .contact-form-container textarea:focus {
+            outline: none;
+            border-color: #06D6A0; /* Emerald Green focus */
+            box-shadow: 0 0 0 3px rgba(6, 214, 160, 0.3);
+        }
+
+        .contact-form-container textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-form-container button {
+            background-color: #FFD166; /* Sunny Yellow button */
+            color: #333; /* Dark text for contrast */
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            align-self: flex-start; /* Align button to start */
+            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to button text */
+            font-size: 1.8rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .contact-form-container button:hover {
+            background-color: #FFC14D;
+            transform: translateY(-2px);
+        }
+
+        /* 新增的滚动动画样式 */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Self Intro Video Section -->
+    <div class="video-container" id="intro-video-section">
+        <!-- Replace with your video path or YouTube embed code -->
+        <video id="introVideo" autoplay muted loop playsinline>
+            <!-- Grace's introduction video -->
+            <source src="Xinlin_Jiang_Introduction.mp4" type="video/mp4">
+            <!-- Fallback for browsers that don't support the video tag -->
+            Your browser does not support the video tag.
+        </video>
+
+        <div class="custom-video-controls">
+            <button id="playPauseButton" aria-label="Play/Pause video">
+                <i class="fas fa-pause"></i>
+            </button>
+            <button id="muteUnmuteButton" aria-label="Mute/Unmute audio">
+                <i class="fas fa-volume-mute"></i>
+            </button>
+            <div class="progress-bar-container" id="progressBarContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="video-overlay">
+            <p class="text-lg md:text-xl font-semibold">For the full cinematic experience (and trust me, it's worth it!), hit that unmute button and let the background music sweep you away!</p>
+        </div>
+
+        <!-- Scroll notification that appears after 1 minute -->
+        <div class="scroll-notification" id="scrollNotification">
+            <p>Scroll down to see my work</p>
+            <i class="fas fa-arrow-down"></i>
+        </div>
+    </div>
+
+    <!-- 2. Self Intro Page -->
+    <section id="self-intro-section" class="bg-black text-white fade-in-section">
+        <h2 class="section-heading">Hello there! I'm Grace Jiang.</h2>
+        <div class="intro-content">
+            <div class="intro-photo-container">
+                <img src="Grace-1.jpeg" alt="Grace Jiang's Photo" class="intro-photo" id="gracePhoto">
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/xinlin-grace-j-5b5261254/" target="_blank" aria-label="LinkedIn Profile">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/gracejiang0612" target="_blank" aria-label="GitHub Profile">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:xj2322@columbia.edu" aria-label="Email Me">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://www.instagram.com/photographer___grace.j" target="_blank" aria-label="Instagram Profile">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="intro-text-container">
+                <p>
+                    Hello! I'm Grace Jiang, a journalist who reports with words, data and visuals.
+                </p>
+                <p>
+                    With a background in multimedia reporting and computer science, I'm passionate about finding unique data points in large datasets, interviewing people to understand the human stories behind the numbers and creating compelling visuals to tell those stories.
+                </p>
+                <p>
+                    I’ll graduate from the M.S. Data Journalism program at Columbia Journalism School in August 2025. Before that, I studied journalism and communication arts at the University of Wisconsin-Madison—<span id="badgersText">go Badgers!</span> I've worked as a reporter, researcher, photographer, and editor, and I'm always looking for the next story hiding in a dataset or on the street.
+                </p>
+                <p class="text-xl" id="welcomeText">
+                    Welcome to my playground!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Data Stories Section -->
+    <section id="data-stories-section" class="bg-gray-900 text-white fade-in-section">
+        <h2 class="section-heading">Data Stories</h2>
+        <div class="portfolio-grid">
+            <!-- Example Data Story Project -->
+            <div class="portfolio-item">
+                <img src="https://placehold.co/400x200/FF6B6B/FFFFFF?text=Data+Story+1" alt="Data Story 1">
+                <div class="content">
+                    <h3>Unpacking the Data Deluge</h3>
+                    <p>A deep dive into how data can tell fascinating stories, even when it's hiding in plain sight.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://placehold.co/400x200/FFD166/FFFFFF?text=Data+Story+2" alt="Data Story 2">
+                <div class="content">
+                    <h3>Interactive Insights Report</h3>
+                    <p>Explore an interactive data report featuring dynamic charts and insightful analyses. Prepare to be enlightened!</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://placehold.co/400x200/06D6A0/FFFFFF?text=Data+Story+3" alt="Data Story 3">
+                <div class="content">
+                    <h3>The Data-Driven Investigation</h3>
+                    <p>A hard-hitting investigative journalism project, powered by massive datasets and a whole lot of coffee.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Writing Stories Section -->
+    <section id="writing-stories-section" class="bg-black text-white fade-in-section">
+        <h2 class="section-heading">Writing Stories</h2>
+        <div class="portfolio-grid">
+            <!-- Example Writing Story Project -->
+            <div class="portfolio-item">
+                <img src="https://placehold.co/400x200/118AB2/FFFFFF?text=Writing+Story+1" alt="Writing Story 1">
+                <div class="content">
+                    <h3>In-Depth Feature Report</h3>
+                    <p>An extensive feature report on a pressing social issue, combining thorough research and compelling interviews.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://placehold.co/400x200/073B4C/FFFFFF?text=Writing+Story+2" alt="Writing Story 2">
+                <div class="content">
+                    <h3>The Human Element: A Profile</h3>
+                    <p>A captivating profile of a local community leader, revealing their untold story and impact.</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="https://placehold.co/400x200/A23B72/FFFFFF?text=Writing+Story+3" alt="Writing Story 3">
+                <div class="content">
+                    <h3>Commentary & Analysis</h3>
+                    <p>My take on current events, offering unique perspectives and sharp analysis. Warning: may cause thinking.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Multimedia Stories Section -->
+    <section id="multimedia-stories-section" class="bg-gray-900 text-white fade-in-section">
+        <h2 class="section-heading">Multimedia Stories</h2>
+        <div class="portfolio-grid">
+            <!-- Example Multimedia Story Project (YouTube Video) -->
+            <div class="portfolio-item">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="content">
+                    <h3>Video Report Sample 1</h3>
+                    <p>A short video report on a local community event. Lights, camera, action!</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/M7lc1UVf-VE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="content">
+                    <h3>Video Report Sample 2</h3>
+                    <p>A snippet from a documentary on environmental issues. Prepare to be moved (or at least informed).</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/LXb3EKWsInQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="content">
+                    <h3>Video Report Sample 3</h3>
+                    <p>An animated video explaining complex concepts. Who said learning couldn't be fun?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Photography Section -->
+    <section id="photography-section" class="bg-black text-white fade-in-section">
+        <h2 class="section-heading">Photography</h2>
+        <div class="portfolio-grid">
+            <!-- Example Photography Work - Direct Image Grid -->
+            <img src="https://placehold.co/400x200/FF6B6B/000000?text=Photo+1" alt="Photography Work 1">
+            <img src="https://placehold.co/400x200/FFD166/000000?text=Photo+2" alt="Photography Work 2">
+            <img src="https://placehold.co/400x200/06D6A0/000000?text=Photo+3" alt="Photography Work 3">
+            <img src="https://placehold.co/400x200/118AB2/000000?text=Photo+4">
+            <img src="https://placehold.co/400x200/073B4C/FFFFFF?text=Photo+5">
+            <img src="https://placehold.co/400x200/A23B72/FFFFFF?text=Photo+6">
+            <img src="https://placehold.co/400x200/FF6B6B/000000?text=Photo+7">
+            <img src="https://placehold.co/400x200/FFD166/000000?text=Photo+8">
+            <img src="https://placehold.co/400x200/06D6A0/000000?text=Photo+9">
+            <img src="https://placehold.co/400x200/118AB2/000000?text=Photo+10">
+            <img src="https://placehold.co/400x200/073B4C/FFFFFF?text=Photo+11">
+            <img src="https://placehold.co/400x200/A23B72/FFFFFF?text=Photo+12">
+        </div>
+    </section>
+
+    <!-- 7. Polaroid Camera Section -->
+    <section id="polaroid-camera-section" class="bg-gray-900 text-white fade-in-section">
+        <h2 class="section-heading">Snap a Polaroid Moment!</h2>
+        <div class="polaroid-container">
+            <div class="polaroid-camera">
+                <video id="cameraFeed" class="camera-feed" autoplay playsinline></video>
+                <div class="camera-lens">
+                    <div class="camera-lens-inner"></div>
+                </div>
+                <button id="shutterButton" class="camera-shutter-button">Snap!</button>
+            </div>
+            <canvas id="cameraCanvas" class="camera-canvas"></canvas>
+            <p class="text-center text-gray-400 mt-4">Click the 'Snap!' button, and your instant masterpiece will download to your device.</p>
+        </div>
+    </section>
+
+    <!-- 8. Sticky Note Wall Section -->
+    <section id="sticky-note-wall-section" class="bg-black text-white fade-in-section">
+        <h2 class="section-heading">My Sticky Note Wall: A Glimpse into My World</h2>
+        <div class="sticky-wall-container">
+            <!-- Example Sticky Note -->
+            <div class="sticky-note">
+                <img src="https://placehold.co/150x150/FF6B6B/333333?text=Photo+A" alt="Sticky Note Photo A">
+                <p>One of my favorite travel photos, capturing a truly unforgettable moment. Wish I was still there!</p>
+            </div>
+            <div class="sticky-note">
+                <img src="https://placehold.co/150x150/FFD166/333333?text=Photo+B" alt="Sticky Note Photo B">
+                <p>My campus life at Columbia University – full of learning, exploring, and maybe a few late-night study sessions.</p>
+            </div>
+            <div class="sticky-note">
+                <img src="https://placehold.co/150x150/06D6A0/333333?text=Photo+C" alt="Sticky Note Photo C">
+                <p>My amazing time at the University of Wisconsin-Madison. Go Badgers! Forever missing those cheese curds.</p>
+            </div>
+            <div class="sticky-note">
+                <img src="https://placehold.co/150x150/118AB2/333333?text=Photo+D" alt="Sticky Note Photo D">
+                <p>A record of an outdoor adventure. I love the peace and quiet nature brings. No deadlines here!</p>
+            </div>
+            <div class="sticky-note">
+                <img src="https://placehold.co/150x150/073B4C/333333?text=Photo+E" alt="Sticky Note Photo E">
+                <p>A funny little moment, capturing the small joys in life. Because sometimes, you just gotta laugh.</p>
+            </div>
+             <div class="sticky-note">
+                <img src="https://placehold.co/150x150/A23B72/333333?text=Photo+F" alt="Sticky Note Photo F">
+                <p>One from my photography portfolio, showcasing the magic of light and shadow. It's all about perspective!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Contact Section -->
+    <section id="contact-section" class="bg-gray-900 text-white fade-in-section">
+        <h2 class="section-heading">Intrigued? Want to know more?</h2>
+        <p class="text-xl text-center mb-8">
+            Drop me a line below, and I'll get back to you faster than you can say 'deadline'!
+        </p>
+        <div class="contact-form-container">
+            <p class="text-center text-lg mb-4">
+                You can also email me directly at: <a href="mailto:xj2322@columbia.edu" class="text-green-400 hover:underline">xj2322@columbia.edu</a>
+            </p>
+            <form id="contactForm">
+                <div>
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" required class="rounded-lg">
+                </div>
+                <div>
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" required class="rounded-lg">
+                </div>
+                <div>
+                    <label for="message">Your Message:</label>
+                    <textarea id="message" name="message" required class="rounded-lg"></textarea>
+                </div>
+                <button type="submit" class="rounded-lg">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Message Box for Camera/Form feedback -->
+    <div id="messageBox" class="message-box">
+        <p id="messageText"></p>
+        <button onclick="document.getElementById('messageBox').style.display='none'">OK</button>
+    </div>
+
+    <script>
+        // Helper function to show custom message box
+        function showMessageBox(message) {
+            const messageBox = document.getElementById('messageBox');
+            const messageText = document.getElementById('messageText');
+            messageText.textContent = message;
+            messageBox.style.display = 'block';
+        }
+
+        // --- Video Playback Control ---
+        const introVideo = document.getElementById('introVideo');
+        const playPauseButton = document.getElementById('playPauseButton');
+        const muteUnmuteButton = document.getElementById('muteUnmuteButton');
+        const progressBar = document.getElementById('progressBar');
+        const progressBarContainer = document.getElementById('progressBarContainer');
+
+        playPauseButton.addEventListener('click', () => {
+            if (introVideo.paused) {
+                introVideo.play();
+                playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                introVideo.pause();
+                playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        });
+
+        muteUnmuteButton.addEventListener('click', () => {
+            introVideo.muted = !introVideo.muted;
+            if (introVideo.muted) {
+                muteUnmuteButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else {
+                muteUnmuteButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        });
+
+        introVideo.addEventListener('timeupdate', () => {
+            const progress = (introVideo.currentTime / introVideo.duration) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        progressBarContainer.addEventListener('click', (e) => {
+            const rect = progressBarContainer.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
+            const duration = introVideo.duration;
+            introVideo.currentTime = (clickX / width) * duration;
+        });
+
+        // --- Scroll Notification After 1 Minute ---
+        const scrollNotification = document.getElementById('scrollNotification');
+        let notificationShown = false;
+
+        introVideo.addEventListener('timeupdate', () => {
+            // Show notification after 1 minute (60 seconds) and only once
+            if (introVideo.currentTime >= 60 && !notificationShown) {
+                scrollNotification.classList.add('show');
+                notificationShown = true;
+                
+                // Auto-hide notification after 10 seconds
+                setTimeout(() => {
+                    scrollNotification.classList.remove('show');
+                }, 10000);
+            }
+        });
+
+        // Make notification clickable to scroll to next section
+        scrollNotification.addEventListener('click', () => {
+            document.getElementById('self-intro-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+            scrollNotification.classList.remove('show');
+        });
+
+        // --- Polaroid Camera Functionality ---
+        const cameraFeed = document.getElementById('cameraFeed');
+        const shutterButton = document.getElementById('shutterButton');
+        const cameraCanvas = document.getElementById('cameraCanvas');
+        const context = cameraCanvas.getContext('2d');
+
+        // Request camera access
+        shutterButton.addEventListener('click', async () => {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showMessageBox('Your browser does not support camera access. Bummer!');
+                return;
+            }
+
+            try {
+                // If camera isn't active, start it
+                if (!cameraFeed.srcObject || cameraFeed.srcObject.getVideoTracks().length === 0) {
+                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    cameraFeed.srcObject = stream;
+                    cameraFeed.style.display = 'block'; // Show the video stream
+                }
+
+                // Ensure video stream is loaded and ready
+                await new Promise(resolve => cameraFeed.onloadedmetadata = resolve);
+
+                // Set canvas dimensions to match video stream
+                cameraCanvas.width = cameraFeed.videoWidth;
+                cameraCanvas.height = cameraFeed.videoHeight;
+
+                // Draw current video frame onto canvas
+                context.drawImage(cameraFeed, 0, 0, cameraCanvas.width, cameraCanvas.height);
+
+                // Convert canvas content to image data URL
+                const imageDataURL = cameraCanvas.toDataURL('image/png');
+
+                // Create a download link
+                const a = document.createElement('a');
+                a.href = imageDataURL;
+                a.download = 'polaroid-photo.png'; // Download file name
+                document.body.appendChild(a);
+                a.click(); // Simulate click to trigger download
+                document.body.removeChild(a);
+
+                showMessageBox('Your masterpiece has been successfully downloaded! Go ahead, print it out and shake it like a Polaroid picture.');
+
+            } catch (err) {
+                console.error('Failed to access camera or take photo:', err);
+                showMessageBox('Can\'t access your camera or snap a pic. Please make sure you\'ve granted permission – my lens is feeling a little shy without it!');
+            }
+        });
+
+        // --- Contact Form Submission (Frontend Example) ---
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // In a real application, you would send this data to a backend server
+            // For example, using the fetch API:
+            /*
+            fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                showMessageBox('Message sent! Thanks for reaching out. I\'ll get back to you quicker than a breaking news alert!');
+                contactForm.reset(); // Clear the form
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                showMessageBox('Failed to send message. Please try again later, or just send an email!');
+            });
+            */
+
+            // For now, this just logs to console and shows a frontend message
+            console.log('Form Data:', { name, email, message });
+            showMessageBox('Message sent! Thanks for reaching out. I\'ll get back to you quicker than a breaking news alert!');
+            contactForm.reset(); // Clear the form
+        });
+
+        // --- Dynamic Photo Change Based on Scroll ---
+        const gracePhoto = document.getElementById('gracePhoto');
+        const selfIntroSection = document.getElementById('self-intro-section');
+        let photoChanged = false;
+
+        function changePhotoOnScroll() {
+            const welcomeText = document.getElementById('welcomeText');
+            const welcomeRect = welcomeText.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            // Switch to Grace-2 when "Welcome to my playground!" text is visible
+            if (welcomeRect.top <= windowHeight * 0.9 && !photoChanged) {
+                console.log('Switching to Grace-2.PNG - Welcome to my playground visible!'); // Debug log
+                // Fade out, change to Grace-2.PNG, then fade in
+                gracePhoto.style.opacity = '0';
+                setTimeout(() => {
+                    gracePhoto.src = 'Grace-2.PNG';
+                    gracePhoto.style.opacity = '1';
+                    console.log('Grace-2.PNG loaded'); // Debug log
+                }, 250);
+                photoChanged = true;
+            } 
+            // Switch back to Grace-1 when scrolling back up past the welcome text
+            else if (welcomeRect.bottom < 0 && photoChanged) {
+                console.log('Switching back to Grace-1.jpeg - scrolled past welcome text'); // Debug log
+                // Fade out, change back to Grace-1.jpeg, then fade in
+                gracePhoto.style.opacity = '0';
+                setTimeout(() => {
+                    gracePhoto.src = 'Grace-1.jpeg';
+                    gracePhoto.style.opacity = '1';
+                    console.log('Grace-1.jpeg loaded'); // Debug log
+                }, 250);
+                photoChanged = false;
+            }
+        }
+
+        window.addEventListener('scroll', changePhotoOnScroll);
+
+        // --- Scroll-triggered Fade-In Animations ---
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
+
+        const observerOptions = {
+            root: null, // viewport as root
+            rootMargin: '0px',
+            threshold: 0.1 // 10% of the section must be visible to trigger
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Stop observing once visible
+                }
+            });
+        }, observerOptions);
+
+        fadeInSections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Initial check for elements already in view on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fadeInSections.forEach(section => {
+                if (section.getBoundingClientRect().top < window.innerHeight) {
+                    section.classList.add('is-visible');
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
