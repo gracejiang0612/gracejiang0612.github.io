@@ -170,11 +170,22 @@
             border-radius: 8px;
             font-size: 0.9rem;
             max-width: 90%;
+            animation: fadeOutAfter20s 20s forwards;
         }
 
         .video-overlay p {
             font-size: 0.9rem;
             margin: 0;
+        }
+
+        @keyframes fadeOutAfter20s {
+            0%, 95% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
         }
 
 
@@ -1311,10 +1322,10 @@
                 scrollNotification.classList.add('show');
                 notificationShown = true;
                 
-                // Auto-hide notification after 10 seconds
+                // Auto-hide notification after 20 seconds
                 setTimeout(() => {
                     scrollNotification.classList.remove('show');
-                }, 10000);
+                }, 20000);
             }
         });
 
@@ -1553,5 +1564,10 @@
         });
 
     </script>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-8 text-center">
+        <p class="text-sm text-white-400">© 2025 Grace Jiang. All rights reserved.</p>
+    </footer>
 </body>
 </html>
