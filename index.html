@@ -35,40 +35,66 @@
 
         .hero-title {
             font-family: 'Alfa Slab One', cursive;
-            font-size: 5rem;
+            font-size: 6rem;
             color: #fff;
+            font-weight: 900;
+            line-height: 0.9;
+            margin: 0 0 40px 0;
+            letter-spacing: -2px;
             text-align: center;
-            margin-bottom: 20px;
-            background-image: linear-gradient(to right,
-                #FF6B6B, /* Warm Red */
-                #FFD166, /* Sunny Yellow */
-                #06D6A0, /* Emerald Green */
-                #118AB2  /* Deep Blue */
-            );
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .hero-subtitle {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.8rem;
-            color: #fff;
-            text-align: center;
-            margin-bottom: 30px;
-            font-weight: 300;
-            opacity: 0.9;
+        /* Sticky Navigation Bar */
+        .nav-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .hero-intro-text {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.2rem;
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 40px;
+        }
+
+        .nav-links li a {
             color: #fff;
-            text-align: center;
-            margin-bottom: 40px;
-            opacity: 0.8;
-            max-width: 600px;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .nav-links li a:hover {
+            color: #06D6A0;
+            transform: translateY(-2px);
+        }
+
+        .nav-links li a.active {
+            color: #06D6A0;
+            background-color: rgba(6, 214, 160, 0.1);
         }
 
         .video-container {
@@ -91,21 +117,42 @@
         /* Responsive design for smaller screens */
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 3.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.4rem;
-            }
-            
-            .hero-intro-text {
-                font-size: 1rem;
-                padding: 0 20px;
+                font-size: 4rem;
             }
             
             .video-container {
                 width: 95%;
                 height: 300px;
+            }
+            
+            .nav-links {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li a {
+                font-size: 0.9rem;
+                padding: 6px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .nav-banner {
+                padding: 10px 0;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .nav-links li a {
+                font-size: 0.8rem;
+                padding: 5px 10px;
             }
         }
 
@@ -831,11 +878,24 @@
 </head>
 <body>
 
+    <!-- Sticky Navigation Banner -->
+    <nav class="nav-banner">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="#intro-video-section">Home</a></li>
+                <li><a href="#data-stories-section">Data Stories</a></li>
+                <li><a href="#writing-stories-section">Writing Stories</a></li>
+                <li><a href="#multimedia-stories-section">Multimedia Stories</a></li>
+                <li><a href="#photography-section">Photography</a></li>
+                <li><a href="#experience-section">Experience</a></li>
+                <li><a href="#contact-section">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- 1. Hero Section with Title and Video -->
     <div class="hero-section" id="intro-video-section">
         <h1 class="hero-title">Grace Jiang</h1>
-        <h2 class="hero-subtitle">A multi-media data journalist</h2>
-        <p class="hero-intro-text">Let's start by getting to know me through a self-introduction video.</p>
         
         <div class="video-container">
             <!-- Grace's introduction video -->
@@ -871,7 +931,6 @@
 
     <!-- 2. Self Intro Page -->
     <section id="self-intro-section" class="bg-black text-white fade-in-section">
-        <h2 class="section-heading">Hello there! I'm Grace Jiang.</h2>
         <div class="intro-content">
             <div class="intro-photo-container">
                 <img src="Grace-1.jpeg" alt="Grace Jiang's Photo" class="intro-photo" id="gracePhoto">
@@ -1106,7 +1165,39 @@
         </div>
     </section>
 
-    <!-- 7. Polaroid Camera Section -->
+    <!-- 7. Experience Section (formerly sticky note section) -->
+    <section id="experience-section" class="bg-black text-white fade-in-section">
+        <h2 class="section-heading">Experience</h2>
+        <div class="sticky-wall-container">
+            <!-- Experience displayed as sticky notes -->
+            <div class="sticky-note">
+                <img src="https://placehold.co/150x150/FF6B6B/333333?text=Columbia" alt="Columbia Journalism School">
+                <p>M.S. Data Journalism at Columbia Journalism School – mastering the art of turning numbers into narratives!</p>
+            </div>
+            <div class="sticky-note">
+                <img src="https://placehold.co/150x150/FFD166/333333?text=UW+Madison" alt="University of Wisconsin-Madison">
+                <p>Journalism & Communication Arts at UW-Madison. Go Badgers! Where I learned to love both cheese curds and compelling stories.</p>
+            </div>
+            <div class="sticky-note">
+                <img src="https://placehold.co/150x150/06D6A0/333333?text=Reporter" alt="Professional Experience">
+                <p>Reporter, researcher, photographer, editor – basically a journalism Swiss Army knife ready for any story!</p>
+            </div>
+            <div class="sticky-note">
+                <img src="https://placehold.co/150x150/118AB2/333333?text=Data+Viz" alt="Data Visualization">
+                <p>Turning spreadsheets into stories and datasets into visual masterpieces. Because data deserves to look pretty too!</p>
+            </div>
+            <div class="sticky-note">
+                <img src="https://placehold.co/150x150/073B4C/333333?text=Multimedia" alt="Multimedia Skills">
+                <p>From video production to interactive graphics – if it tells a story, I'm probably excited to learn how to make it.</p>
+            </div>
+             <div class="sticky-note">
+                <img src="https://placehold.co/150x150/A23B72/333333?text=Future" alt="What's Next">
+                <p>Graduating August 2025 and ready to bring data-driven storytelling to newsrooms that aren't afraid of innovation!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Polaroid Camera Section -->
     <section id="polaroid-camera-section" class="bg-gray-900 text-white fade-in-section">
         <h2 class="section-heading">Snap a Polaroid Moment!</h2>
         <div class="polaroid-container">
@@ -1119,38 +1210,6 @@
             </div>
             <canvas id="cameraCanvas" class="camera-canvas"></canvas>
             <p class="text-center text-gray-400 mt-4">Click the 'Snap!' button, and your instant masterpiece will download to your device.</p>
-        </div>
-    </section>
-
-    <!-- 8. Sticky Note Wall Section -->
-    <section id="sticky-note-wall-section" class="bg-black text-white fade-in-section">
-        <h2 class="section-heading">My Sticky Note Wall: A Glimpse into My World</h2>
-        <div class="sticky-wall-container">
-            <!-- Example Sticky Note -->
-            <div class="sticky-note">
-                <img src="https://placehold.co/150x150/FF6B6B/333333?text=Photo+A" alt="Sticky Note Photo A">
-                <p>One of my favorite travel photos, capturing a truly unforgettable moment. Wish I was still there!</p>
-            </div>
-            <div class="sticky-note">
-                <img src="https://placehold.co/150x150/FFD166/333333?text=Photo+B" alt="Sticky Note Photo B">
-                <p>My campus life at Columbia University – full of learning, exploring, and maybe a few late-night study sessions.</p>
-            </div>
-            <div class="sticky-note">
-                <img src="https://placehold.co/150x150/06D6A0/333333?text=Photo+C" alt="Sticky Note Photo C">
-                <p>My amazing time at the University of Wisconsin-Madison. Go Badgers! Forever missing those cheese curds.</p>
-            </div>
-            <div class="sticky-note">
-                <img src="https://placehold.co/150x150/118AB2/333333?text=Photo+D" alt="Sticky Note Photo D">
-                <p>A record of an outdoor adventure. I love the peace and quiet nature brings. No deadlines here!</p>
-            </div>
-            <div class="sticky-note">
-                <img src="https://placehold.co/150x150/073B4C/333333?text=Photo+E" alt="Sticky Note Photo E">
-                <p>A funny little moment, capturing the small joys in life. Because sometimes, you just gotta laugh.</p>
-            </div>
-             <div class="sticky-note">
-                <img src="https://placehold.co/150x150/A23B72/333333?text=Photo+F" alt="Sticky Note Photo F">
-                <p>One from my photography portfolio, showcasing the magic of light and shadow. It's all about perspective!</p>
-            </div>
         </div>
     </section>
 
@@ -1443,6 +1502,54 @@
             if (e.key === 'Escape') {
                 closeLightbox();
             }
+        });
+
+        // --- Active Navigation Highlighting ---
+        function updateActiveNavigation() {
+            const sections = document.querySelectorAll('section[id], div[id="intro-video-section"]');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let currentSection = '';
+            const scrollPosition = window.scrollY + 100; // Offset for fixed nav
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Update active navigation on scroll
+        window.addEventListener('scroll', updateActiveNavigation);
+        
+        // Update active navigation on page load
+        document.addEventListener('DOMContentLoaded', updateActiveNavigation);
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    const offsetTop = targetSection.offsetTop - 70; // Account for fixed nav
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
 
     </script>
