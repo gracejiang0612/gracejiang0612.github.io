@@ -7,7 +7,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for Inter (general fallback), Caveat (handwritten), and Alfa Slab One (bold display) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Caveat:wght@400;700&family=Alfa+Slab+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Caveat:wght@400;700&family=Alfa+Slab+One&family=Markazi+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -625,9 +625,10 @@
 
 
         .portfolio-item p {
-            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to portfolio item paragraphs */
-            font-size: 0.9rem; /* Smaller for readability */
-            line-height: 1.4;
+            font-family: 'Markazi Text', serif; /* Use Markazi Text for subtitles */
+            font-size: 1.5rem; /* Just right subtitle size */
+            font-weight: 400; /* Normal weight for better readability */
+            line-height: 1.6;
             color: #f0f0f0;
         }
 
@@ -935,7 +936,7 @@
             </div>
 
             <div class="video-overlay">
-                <p>For the full cinematic experience, hit that unmute button!</p>
+                <p>Loading... For the full cinematic experience, please hit that unmute button.</p>
             </div>
         </div>
 
@@ -1052,34 +1053,45 @@
     <section id="multimedia-stories-section" class="bg-gray-900 text-white fade-in-section">
         <h2 class="section-heading">Multimedia Stories</h2>
         <div class="portfolio-grid">
-            <!-- Example Multimedia Story Project (YouTube Video) -->
-            <div class="portfolio-item">
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
+            <!-- Asian Hate in Madison Multimedia Story -->
+            <a href="https://asianhateinmadison.wordpress.com/" target="_blank" class="portfolio-item" style="text-decoration: none; color: white;">
+                <img src="Multimedia-Stories/pic1.jpg" alt="Asian Hate in Madison Multimedia Report">
                 <div class="content">
-                    <h3>Video Report Sample 1</h3>
-                    <p>A short video report on a local community event. Lights, camera, action!</p>
+                    <h3>Asian Hate in Madison</h3>
+                    <p>Award winning report: 2023 Midwest Broadcast Journalists Association Eric Sevareid Awards Multimedia Storytelling First Place. A multimedia series report of Asian Hate at Madison based on three unprovoked brutal beatings of Asian students near the UW-Madison campus on June 14, 2022.</p>
+                    <div class="tools-used" style="display: flex; justify-content: flex-start; gap: 8px; margin-top: 15px; flex-wrap: wrap;">
+                        <span style="font-size: 0.75rem; padding: 4px 10px; background-color: #06D6A0; color: white; border-radius: 15px; font-weight: 500;">Adobe InDesign</span>
+                        <span style="font-size: 0.75rem; padding: 4px 10px; background-color: #FF6B9D; color: white; border-radius: 15px; font-weight: 500;">Adobe Premiere</span>
+                        <span style="font-size: 0.75rem; padding: 4px 10px; background-color: #4ECDC4; color: white; border-radius: 15px; font-weight: 500;">Adobe Audition</span>
+                        <span style="font-size: 0.75rem; padding: 4px 10px; background-color: #45B7D1; color: white; border-radius: 15px; font-weight: 500;">Lightroom</span>
+                    </div>
                 </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/M7lc1UVf-VE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
+            </a>
+            <!-- Clay Sculpture Documentary -->
+            <a href="https://www.youtube.com/watch?v=vZaDsrhvZ_Q&t=61s" target="_blank" class="portfolio-item" style="text-decoration: none; color: white;">
+                <img src="Multimedia-Stories/pic2.png" alt="Clay Sculpture Documentary">
                 <div class="content">
-                    <h3>Video Report Sample 2</h3>
-                    <p>A snippet from a documentary on environmental issues. Prepare to be moved (or at least informed).</p>
+                    <h3>Clay Sculpture</h3>
+                    <p>Award winning documentary: 2022 NCDA Awards Second Award for Documentary. A documentary about intangible Cultural Heritage— Clay Sculpture.</p>
+                    <div class="tools-used" style="display: flex; justify-content: flex-start; gap: 8px; margin-top: 15px; flex-wrap: wrap;">
+                        <span style="font-size: 0.75rem; padding: 4px 10px; background-color: #9B59B6; color: white; border-radius: 15px; font-weight: 500;">Adobe After Effects</span>
+                        <span style="font-size: 0.75rem; padding: 4px 10px; background-color: #FF6B9D; color: white; border-radius: 15px; font-weight: 500;">Adobe Premiere</span>
+                        <span style="font-size: 0.75rem; padding: 4px 10px; background-color: #4ECDC4; color: white; border-radius: 15px; font-weight: 500;">Adobe Audition</span>
+                    </div>
                 </div>
-            </div>
-            <div class="portfolio-item">
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/LXb3EKWsInQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
+            </a>
+            <!-- Sugar Painting Documentary -->
+            <a href="https://www.youtube.com/watch?v=PKXOLilLfxI" target="_blank" class="portfolio-item" style="text-decoration: none; color: white;">
+                <img src="Multimedia-Stories/pic3.png" alt="Sugar Painting Documentary">
                 <div class="content">
-                    <h3>Video Report Sample 3</h3>
-                    <p>An animated video explaining complex concepts. Who said learning couldn't be fun?</p>
+                    <h3>Sugar Painting</h3>
+                    <p>Air on TV documentary about intangible Cultural Heritage— Sugar Painting.</p>
+                    <div class="tools-used" style="display: flex; justify-content: flex-start; gap: 8px; margin-top: 15px; flex-wrap: wrap;">
+                        <span style="font-size: 0.75rem; padding: 4px 10px; background-color: #9B59B6; color: white; border-radius: 15px; font-weight: 500;">Adobe After Effects</span>
+                        <span style="font-size: 0.75rem; padding: 4px 10px; background-color: #FF6B9D; color: white; border-radius: 15px; font-weight: 500;">Adobe Premiere</span>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </section>
 
