@@ -20,65 +20,129 @@
             scroll-behavior: smooth; /* Enable smooth scrolling for anchor links */
         }
 
-        /* 全屏视频容器 */
-        .video-container {
+        /* Hero section with title and video */
+        .hero-section {
             position: relative;
             width: 100vw;
             height: 100vh;
-            overflow: hidden;
+            background-color: #000;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #000; /* Background before video loads */
+            padding: 60px 20px;
+        }
+
+        .hero-title {
+            font-family: 'Alfa Slab One', cursive;
+            font-size: 5rem;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            background-image: linear-gradient(to right,
+                #FF6B6B, /* Warm Red */
+                #FFD166, /* Sunny Yellow */
+                #06D6A0, /* Emerald Green */
+                #118AB2  /* Deep Blue */
+            );
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.8rem;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .hero-intro-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            max-width: 600px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
         .video-container video {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            object-fit: cover; /* Ensure video covers the entire container */
-            z-index: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.4rem;
+            }
+            
+            .hero-intro-text {
+                font-size: 1rem;
+                padding: 0 20px;
+            }
+            
+            .video-container {
+                width: 95%;
+                height: 300px;
+            }
         }
 
         /* 视频上方的叠加内容 - 调整为更小尺寸和顶部位置 */
         .video-overlay {
             position: absolute;
-            top: 20px; /* Moved from bottom to top */
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
             text-align: center;
             color: #fff;
-            background-color: rgba(0, 0, 0, 0.6); /* Slightly less opaque */
-            padding: 8px 15px; /* Smaller padding */
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 8px 15px;
             border-radius: 8px;
-            font-size: 0.9rem; /* Smaller font size */
-            max-width: 80%; /* Limit width */
+            font-size: 0.9rem;
+            max-width: 90%;
         }
 
         .video-overlay p {
-            font-size: 1rem; /* Ensure the text itself is not too large */
-            margin: 0; /* Remove default paragraph margin */
+            font-size: 0.9rem;
+            margin: 0;
         }
 
 
         /* 自定义视频控制器样式 */
         .custom-video-controls {
             position: absolute;
-            bottom: 80px; /* Adjust position */
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
             display: flex;
             align-items: center;
             gap: 15px;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
             border-radius: 12px;
         }
 
@@ -113,7 +177,7 @@
 
         /* Scroll notification styling */
         .scroll-notification {
-            position: absolute;
+            position: fixed;
             bottom: 30px;
             right: 30px;
             z-index: 15;
@@ -767,30 +831,35 @@
 </head>
 <body>
 
-    <!-- 1. Self Intro Video Section -->
-    <div class="video-container" id="intro-video-section">
-        <!-- Replace with your video path or YouTube embed code -->
-        <video id="introVideo" autoplay muted loop playsinline>
+    <!-- 1. Hero Section with Title and Video -->
+    <div class="hero-section" id="intro-video-section">
+        <h1 class="hero-title">Grace Jiang</h1>
+        <h2 class="hero-subtitle">A multi-media data journalist</h2>
+        <p class="hero-intro-text">Let's start by getting to know me through a self-introduction video.</p>
+        
+        <div class="video-container">
             <!-- Grace's introduction video -->
-            <source src="Xinlin_Jiang_Introduction.mp4" type="video/mp4">
-            <!-- Fallback for browsers that don't support the video tag -->
-            Your browser does not support the video tag.
-        </video>
+            <video id="introVideo" autoplay muted loop playsinline>
+                <source src="Xinlin_Jiang_Introduction.mp4" type="video/mp4">
+                <!-- Fallback for browsers that don't support the video tag -->
+                Your browser does not support the video tag.
+            </video>
 
-        <div class="custom-video-controls">
-            <button id="playPauseButton" aria-label="Play/Pause video">
-                <i class="fas fa-pause"></i>
-            </button>
-            <button id="muteUnmuteButton" aria-label="Mute/Unmute audio">
-                <i class="fas fa-volume-mute"></i>
-            </button>
-            <div class="progress-bar-container" id="progressBarContainer">
-                <div class="progress-bar" id="progressBar"></div>
+            <div class="custom-video-controls">
+                <button id="playPauseButton" aria-label="Play/Pause video">
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button id="muteUnmuteButton" aria-label="Mute/Unmute audio">
+                    <i class="fas fa-volume-mute"></i>
+                </button>
+                <div class="progress-bar-container" id="progressBarContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
             </div>
-        </div>
 
-        <div class="video-overlay">
-            <p class="text-lg md:text-xl font-semibold">For the full cinematic experience (and trust me, it's worth it!), hit that unmute button and let the background music sweep you away!</p>
+            <div class="video-overlay">
+                <p>For the full cinematic experience, hit that unmute button!</p>
+            </div>
         </div>
 
         <!-- Scroll notification that appears after 1 minute -->
