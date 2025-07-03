@@ -334,35 +334,18 @@
             background-color: #000;
         }
 
-        /* 现代、多彩的标题 (油画色彩效果) */
+        /* Clean white section headings */
         .section-heading {
             font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One for headings */
             font-size: 4.5rem; /* Larger for impact */
             font-weight: normal; /* Alfa Slab One is already bold */
             margin-bottom: 2rem;
             text-align: center;
-            /* Using a rich, multi-stop gradient for "oil painting" effect */
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent; /* Make text transparent to show background gradient */
-            background-image: linear-gradient(to right,
-                #FF6B6B, /* Warm Red */
-                #FFD166, /* Sunny Yellow */
-                #06D6A0, /* Emerald Green */
-                #118AB2, /* Deep Blue */
-                #073B4C, /* Dark Teal */
-                #A23B72, /* Rich Plum */
-                #FF6B6B /* Repeat for seamless loop */
-            );
-            background-size: 200% auto; /* For animation */
-            animation: color-cycle 15s infinite linear; /* Slower animation for painterly feel */
-            text-shadow: 4px 4px 8px rgba(0,0,0,0.5); /* Stronger shadow for depth */
+            color: white; /* Clean white text */
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.5); /* Shadow for depth and readability */
         }
 
-        @keyframes color-cycle {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
+
 
         /* 自我介绍部分布局 */
         .intro-content {
