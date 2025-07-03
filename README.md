@@ -65,4 +65,4 @@ My visual work spans:
 *"Welcome to my playground!" 
 
 ## 🙏 Acknowledgments
-Special thanks to Columbia Journalism School, University of Wisconsin-Madison, and all the mentors and colleagues who have supported my journey in data journalism.
+Special thanks to Columbia Journalism School, University of Wisconsin-Madison(Always my second hometown!!!) and all the mentors and colleagues who have supported my journey in journalism.
