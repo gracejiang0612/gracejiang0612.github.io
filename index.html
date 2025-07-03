@@ -747,7 +747,7 @@
             object-fit: cover;
             border-radius: 15px;
             background-color: #222; /* Placeholder for video feed */
-            display: none; /* Hidden by default, shown when camera is active */
+            display: block; /* Always visible to show camera feed */
             position: absolute;
             top: 0;
             left: 0;
@@ -1320,7 +1320,7 @@
                 <button id="shutterButton" class="camera-shutter-button">Snap!</button>
             </div>
             <canvas id="cameraCanvas" class="camera-canvas"></canvas>
-            <p class="text-center text-gray-400 mt-4">Click the 'Snap!' button, and your instant masterpiece will download to your device.</p>
+            <p class="text-center text-gray-400 mt-4">Want to create your own memory? Try snapping a Polaroid moment!</p>
         </div>
     </section>
 
@@ -1442,8 +1442,9 @@
         const shutterButton = document.getElementById('shutterButton');
         const cameraCanvas = document.getElementById('cameraCanvas');
         const context = cameraCanvas.getContext('2d');
+        let cameraStream = null;
 
-        // Request camera access
+        // Initialize camera when user first clicks the shutter button
         shutterButton.addEventListener('click', async () => {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                 showMessageBox('Your browser does not support camera access. Bummer!');
@@ -1451,39 +1452,72 @@
             }
 
             try {
-                // If camera isn't active, start it
-                if (!cameraFeed.srcObject || cameraFeed.srcObject.getVideoTracks().length === 0) {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                    cameraFeed.srcObject = stream;
-                    cameraFeed.style.display = 'block'; // Show the video stream
+                // Start camera if not already running
+                if (!cameraStream) {
+                    cameraStream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { 
+                            width: { ideal: 640 },
+                            height: { ideal: 480 }
+                        } 
+                    });
+                    cameraFeed.srcObject = cameraStream;
+                    
+                    // Wait for video to be ready
+                    await new Promise((resolve) => {
+                        cameraFeed.onloadedmetadata = () => {
+                            cameraFeed.play();
+                            resolve();
+                        };
+                    });
+                    
+                    // Give a moment for the video to start playing
+                    await new Promise(resolve => setTimeout(resolve, 500));
                 }
 
-                // Ensure video stream is loaded and ready
-                await new Promise(resolve => cameraFeed.onloadedmetadata = resolve);
+                // Set canvas dimensions to match the video display
+                const rect = cameraFeed.getBoundingClientRect();
+                cameraCanvas.width = cameraFeed.videoWidth || 640;
+                cameraCanvas.height = cameraFeed.videoHeight || 480;
 
-                // Set canvas dimensions to match video stream
-                cameraCanvas.width = cameraFeed.videoWidth;
-                cameraCanvas.height = cameraFeed.videoHeight;
+                // Clear canvas first
+                context.clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
 
                 // Draw current video frame onto canvas
-                context.drawImage(cameraFeed, 0, 0, cameraCanvas.width, cameraCanvas.height);
+                if (cameraFeed.readyState === cameraFeed.HAVE_ENOUGH_DATA) {
+                    context.drawImage(cameraFeed, 0, 0, cameraCanvas.width, cameraCanvas.height);
+                    
+                    // Convert canvas content to image data URL
+                    const imageDataURL = cameraCanvas.toDataURL('image/png');
 
-                // Convert canvas content to image data URL
-                const imageDataURL = cameraCanvas.toDataURL('image/png');
+                    // Create a download link
+                    const a = document.createElement('a');
+                    a.href = imageDataURL;
+                    a.download = `polaroid-photo-${Date.now()}.png`; // Unique filename
+                    document.body.appendChild(a);
+                    a.click(); // Simulate click to trigger download
+                    document.body.removeChild(a);
 
-                // Create a download link
-                const a = document.createElement('a');
-                a.href = imageDataURL;
-                a.download = 'polaroid-photo.png'; // Download file name
-                document.body.appendChild(a);
-                a.click(); // Simulate click to trigger download
-                document.body.removeChild(a);
-
-                showMessageBox('Your masterpiece has been successfully downloaded! Go ahead, print it out and shake it like a Polaroid picture.');
+                    showMessageBox('Your masterpiece has been successfully downloaded! Go ahead, print it out and shake it like a Polaroid picture.');
+                } else {
+                    showMessageBox('Camera is still loading... please wait a moment and try again!');
+                }
 
             } catch (err) {
                 console.error('Failed to access camera or take photo:', err);
-                showMessageBox('Can\'t access your camera or snap a pic. Please make sure you\'ve granted permission – my lens is feeling a little shy without it!');
+                if (err.name === 'NotAllowedError') {
+                    showMessageBox('Camera access was denied. Please allow camera permission in your browser settings and refresh the page!');
+                } else if (err.name === 'NotFoundError') {
+                    showMessageBox('No camera found on your device. Maybe try using a device with a camera?');
+                } else {
+                                         showMessageBox('Can\'t access your camera or snap a pic. Please make sure you\'ve granted permission – my lens is feeling a little shy without it!');
+                }
+            }
+        });
+
+        // Clean up camera stream when page is unloaded
+        window.addEventListener('beforeunload', () => {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
             }
         });
 
@@ -1667,7 +1701,7 @@
 
     <!-- Footer -->
     <footer class="bg-black text-white py-8 text-center">
-        <p class="text-sm text-white-400">© 2025 Grace Jiang. Site last updated 2025-07-01</p>
+        <p class="text-sm text-white-400">© 2025 Grace Jiang. Site last updated 2025-07-03</p>
     </footer>
 </body>
 </html>
