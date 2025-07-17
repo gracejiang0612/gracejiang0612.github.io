@@ -12,6 +12,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts for Inter (general fallback), Caveat (handwritten), and Alfa Slab One (bold display) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Caveat:wght@400;700&family=Alfa+Slab+One&family=Markazi+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Web Font for Cheltenham Bold -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -37,15 +39,64 @@
             padding: 60px 20px;
         }
 
+        .hero-title-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
         .hero-title {
             font-family: 'Alfa Slab One', cursive;
             font-size: 6rem;
             color: #fff;
             font-weight: 900;
             line-height: 0.9;
-            margin: 0 0 40px 0;
+            margin: 0 0 20px 0;
             letter-spacing: -2px;
             text-align: center;
+        }
+
+        .hero-social-icons {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+        }
+
+        .hero-social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-social-icons a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #06D6A0;
+            transform: scale(1.1);
+            border-color: #06D6A0;
+        }
+
+        /* Responsive styling for mobile devices */
+        @media (max-width: 768px) {
+            .hero-social-icons {
+                gap: 10px;
+            }
+
+            .hero-social-icons a {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
         }
 
         /* Sticky Navigation Bar */
@@ -94,9 +145,9 @@
         .nav-links li a {
             color: #fff;
             text-decoration: none;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Playfair Display', 'Times New Roman', serif;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 700; /* Bold weight for NYTCheltenham Bold effect */
             transition: color 0.3s ease, transform 0.3s ease;
             padding: 8px 16px;
             border-radius: 6px;
@@ -389,16 +440,18 @@
         }
 
         .intro-text-container p {
-            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to intro text */
+            font-family: 'Playfair Display', 'Times New Roman', serif; /* Apply Playfair Display to intro text with fallback */
             font-size: 1.6rem; /* Increased from 1.2rem for better readability */
+            font-weight: 700; /* Bold weight for NYTCheltenham Bold effect */
             line-height: 1.5; /* Reduced from 1.7 for more compact layout */
             margin-bottom: 1.2rem; /* Reduced from 1.8rem for tighter spacing */
             color: #f0f0f0; /* Ensure good contrast */
         }
 
         .intro-text-container .text-xl {
-            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to the "Welcome" line */
+            font-family: 'Playfair Display', serif; /* Apply Playfair Display to the "Welcome" line */
             font-size: 2.4rem; /* Increased from 1.8rem for better emphasis */
+            font-weight: 700; /* Bold weight for NYTCheltenham Bold effect */
             color: #FFD166; /* Sunny Yellow for emphasis */
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
             margin-bottom: 0; /* Remove extra margin from the last element */
@@ -619,9 +672,9 @@
         }
 
         .portfolio-item h3 {
-            font-family: 'Alfa Slab One', cursive; /* Apply Alfa Slab One to portfolio item titles */
+            font-family: 'Playfair Display', 'Times New Roman', serif; /* Apply Playfair Display to portfolio item titles with fallback */
             font-size: 1.8rem; /* Larger for impact */
-            font-weight: normal;
+            font-weight: 900; /* Extra bold weight for NYTCheltenham Bold effect */
             margin-bottom: 10px;
             color: #FFD166; /* Sunny Yellow for portfolio item titles */
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
@@ -634,11 +687,12 @@
 
 
         .portfolio-item p {
-            font-family: 'Markazi Text', serif; /* Use Markazi Text for subtitles */
-            font-size: 1.5rem; /* Just right subtitle size */
+            font-family: 'Playfair Display', 'Times New Roman', serif; /* Use Playfair Display for subtitles with fallback */
+            font-size: 1.1rem; /* Even smaller subtitle size (2pt smaller again) */
             font-weight: 400; /* Normal weight for better readability */
+            font-style: italic; /* Italic style for subtitles */
             line-height: 1.6;
-            color: #f0f0f0;
+            color: #ccc; /* Light grey for subtitles */
         }
 
         /* YouTube 视频嵌入样式 */
@@ -896,10 +950,38 @@
             transform: translateY(0);
         }
 
-        /* Ensure linked story titles and subtitles stay white */
-        a.portfolio-item h3,
-        a.portfolio-item p {
+        /* Ensure linked story titles stay white, subtitles light grey and italic */
+        a.portfolio-item h3 {
             color: white !important;
+        }
+        
+        a.portfolio-item p {
+            color: #ccc !important; /* Light grey for subtitles */
+            font-size: 1.1rem !important; /* Even smaller subtitle size */
+            font-style: italic !important; /* Italic style for subtitles */
+        }
+        
+        /* Ensure proper apostrophe rendering */
+        body {
+            font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* Contact section text styling */
+        #contact-section .text-xl {
+            font-family: 'Playfair Display', 'Times New Roman', serif;
+            font-weight: 700;
+        }
+
+        #contact-section .text-lg {
+            font-family: 'Playfair Display', 'Times New Roman', serif;
+            font-weight: 700;
+        }
+
+        /* Polaroid camera section text styling */
+        .text-gray-400 {
+            font-family: 'Playfair Display', 'Times New Roman', serif !important;
+            font-weight: 700 !important;
         }
     </style>
 </head>
@@ -925,7 +1007,23 @@
 
     <!-- 1. Hero Section with Title and Video -->
     <div class="hero-section" id="intro-video-section">
-        <h1 class="hero-title">Grace Jiang</h1>
+        <div class="hero-title-container">
+            <h1 class="hero-title">Grace Jiang</h1>
+            <div class="hero-social-icons">
+                <a href="https://www.linkedin.com/in/xinlin-grace-j-5b5261254/" target="_blank" aria-label="LinkedIn Profile">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/gracejiang0612" target="_blank" aria-label="GitHub Profile">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:xj2322@columbia.edu" aria-label="Email Me">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://www.instagram.com/photographer___grace.j" target="_blank" aria-label="Instagram Profile">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
         
         <div class="video-container">
             <!-- Grace's introduction video -->
@@ -981,13 +1079,13 @@
             </div>
             <div class="intro-text-container">
                 <p>
-                    Hello! I'm Grace Jiang, a journalist who reports with words, data and visuals.
+                    Hello! I’m Grace Jiang, a journalist who reports with words, data and visuals.
                 </p>
                 <p>
-                    With a background in multimedia reporting and computer science, I'm passionate about finding unique data points in large datasets, interviewing people to understand the human stories behind the numbers and creating compelling visuals to tell those stories.
+                    With a background in multimedia reporting and computer science, I’m passionate about finding unique data points in large datasets, interviewing people to understand the human stories behind the numbers and creating compelling visuals to tell those stories.
                 </p>
                 <p>
-                    I’ll graduate from the M.S. data journalism program at Columbia Journalism School in August 2025. Before that, I studied journalism and communication arts at the University of Wisconsin-Madison—<span id="badgersText">go Badgers!</span> I've worked as a reporter, researcher, photographer and editor, and I'm always looking for the next story hiding in a dataset or on the street.
+                    I’ll graduate from the M.S. data journalism program at Columbia Journalism School in August 2025. Before that, I studied journalism and communication arts at the University of Wisconsin-Madison—<span id="badgersText">go Badgers!</span> I’ve worked as a reporter, researcher, photographer and editor, and I'm always looking for the next story hiding in a dataset or on the street.
                 </p>
                 <p class="text-xl" id="welcomeText">
                     Welcome to my playground!
@@ -1054,7 +1152,7 @@
             <a href="https://news.wisc.edu/first-down-in-madison-a-rookies-guide-to-navigating-football-frenzy/" target="_blank" class="portfolio-item" style="text-decoration: none; color: white;">
                 <img src="writting-stories-img/pic3.jpg" alt="Football Guide Story">
                 <div class="content">
-                    <h3>Student Stories: A rookie's guide to navigating football frenzy</h3>
+                    <h3>Student Stories: A rookie’s guide to navigating football frenzy</h3>
                     <p>Award winning story: Best Editorial or Commentary-SILVER from The Milwaukee Press Club; Society of Professional Journalists Region 6 Mark of Excellence Awards 2024-Sports Writing Finalist</p>
                 </div>
             </a>
@@ -1314,12 +1412,26 @@
     <section id="contact-section" class="bg-gray-900 text-white fade-in-section">
         <h2 class="section-heading">Want to get in touch?</h2>
         <p class="text-xl text-center mb-8">
-            Drop me a line below, and I'll get back to you faster than you can say "deadline"!
+            Drop me a line below, and I’ll get back to you faster than you can say “deadline”!
         </p>
         <div class="contact-form-container">
             <p class="text-center text-lg mb-4">
                 You can also email me directly at: <a href="mailto:xj2322@columbia.edu" class="text-green-400 hover:underline">xj2322@columbia.edu</a>
             </p>
+            <div class="social-icons text-center mb-6">
+                <a href="https://www.linkedin.com/in/xinlin-grace-j-5b5261254/" target="_blank" aria-label="LinkedIn Profile">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/gracejiang0612" target="_blank" aria-label="GitHub Profile">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:xj2322@columbia.edu" aria-label="Email Me">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://www.instagram.com/photographer___grace.j" target="_blank" aria-label="Instagram Profile">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
             <form id="contactForm">
                 <div>
                     <label for="name">Your Name:</label>
